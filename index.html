@@ -1,0 +1,818 @@
+
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+							<style>
+								body {
+									background-color: white; /* Ensure the iframe has a white background */
+								}
+
+								
+							</style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanyang (Seraphina) Zhang | Portfolio</title>
+    <style>
+        /* ============================================================
+           色彩系统："天使光环" (Angel Halo Palette)
+        ============================================================ */
+        :root {
+            --c-blue: #CBD4E5;
+            --c-lavender: #A795BF;
+            --c-yellow: #FEE9A1;
+            --c-purple: #6C5DAB;
+            --c-rose: #CCA2A7;
+            
+            --text-main: #362D4D; 
+            --text-light: #6A5D8A;
+            
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 8px 32px rgba(108, 93, 171, 0.1);
+            
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth; 
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text-main);
+            line-height: 1.7;
+            background-color: #fcfcfc;
+            overflow-x: hidden;
+        }
+
+        /* 动态流体渐变背景 */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(203, 212, 229, 0.6), transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(167, 149, 191, 0.5), transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(254, 233, 161, 0.6), transparent 50%),
+                radial-gradient(circle at 50% 90%, rgba(204, 162, 167, 0.5), transparent 50%),
+                radial-gradient(circle at 50% 10%, rgba(108, 93, 171, 0.15), transparent 40%);
+            filter: blur(60px);
+            animation: pulse 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(2deg); }
+            100% { transform: scale(1) rotate(-1deg); }
+        }
+
+        /* 页面布局 */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* 左侧：个人资料卡片 */
+        .sidebar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            box-shadow: var(--glass-shadow);
+            position: sticky;
+            top: 40px;
+            text-align: center;
+        }
+
+        /* 头像与动效 */
+        .avatar-container {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--c-blue), var(--c-purple), var(--c-rose));
+            box-shadow: 0 10px 25px rgba(108, 93, 171, 0.2);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 15%; 
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .avatar-container::after {
+            content: 'Open To Work ✨';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--c-purple), var(--c-rose));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: 0 4px 15px rgba(108, 93, 171, 0.3);
+            z-index: 100;
+        }
+
+        .avatar-container:hover::after {
+            animation: openToWorkFlash 2.5s forwards;
+        }
+
+        @keyframes openToWorkFlash {
+            0% { opacity: 0; transform: translate(-50%, 15px); visibility: visible; }
+            15% { opacity: 1; transform: translate(-50%, -15px); }
+            70% { opacity: 1; transform: translate(-50%, -15px); }
+            100% { opacity: 0; transform: translate(-50%, -35px); visibility: hidden; }
+        }
+
+        .name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--c-purple);
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+
+        .title {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .contact-info {
+            text-align: left;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .contact-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: rgba(167, 149, 191, 0.2);
+            color: var(--c-purple);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 12px;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+
+        .contact-info a {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-info a:hover {
+            color: var(--c-purple);
+            text-decoration: underline;
+        }
+
+        .status-badge {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 16px;
+            background: rgba(254, 233, 161, 0.4);
+            border: 1px solid var(--c-yellow);
+            color: #8c7311;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* 左侧快速导航 */
+        .nav-container {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px dashed rgba(108, 93, 171, 0.3);
+            text-align: left;
+        }
+
+        .nav-header {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--c-purple);
+            font-weight: 800;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-header::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--c-rose);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--c-rose);
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 18px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 10px rgba(108, 93, 171, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-nav a i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-nav a:hover {
+            background: linear-gradient(135deg, var(--c-blue), var(--c-purple));
+            color: white;
+            transform: translateX(10px) scale(1.02);
+            border-color: transparent;
+            box-shadow: 0 10px 25px rgba(108, 93, 171, 0.3);
+        }
+
+        .sidebar-nav a:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        /* 右侧内容区域 */
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 35px 40px;
+            box-shadow: var(--glass-shadow);
+            transition: var(--transition);
+            scroll-margin-top: 40px; 
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(108, 93, 171, 0.15);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--c-purple);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--c-lavender), transparent);
+            margin-left: 15px;
+            border-radius: 2px;
+        }
+
+        .summary-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-main);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 35px;
+            border-left: 2px solid var(--c-blue);
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+            border-left: 2px solid transparent; 
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            background: var(--c-blue);
+            border: 2px solid white;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover::before {
+            background: var(--c-purple);
+            transform: scale(1.2);
+            box-shadow: 0 0 10px var(--c-lavender);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .item-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .item-org {
+            font-size: 1rem;
+            color: var(--c-purple);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .item-meta {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            background: rgba(203, 212, 229, 0.3);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .item-desc {
+            margin-top: 10px;
+        }
+
+        .item-desc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .item-desc li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .item-desc li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--c-rose);
+            font-size: 0.8rem;
+            top: 2px;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: var(--c-purple);
+            background: rgba(167, 149, 191, 0.15);
+            padding: 0 4px;
+            border-radius: 3px;
+        }
+
+        /* ======= 图片展示样式 ======= */
+        .portfolio-img {
+            width: 100%;
+            max-width: 350px; 
+            border-radius: 12px;
+            margin: 15px 0;
+            box-shadow: 0 8px 24px rgba(108, 93, 171, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: max-width 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.6s ease;
+            display: block;
+        }
+        
+        .portfolio-img:hover {
+            max-width: 700px;
+            box-shadow: 0 15px 40px rgba(108, 93, 171, 0.3);
+        }
+
+        .image-gallery {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0 20px 0;
+            width: 100%;
+        }
+
+        .gallery-item {
+            flex: 1;
+            height: 180px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease, z-index 0.4s;
+            position: relative;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.6); 
+            z-index: 10; 
+            box-shadow: 0 15px 40px rgba(108, 93, 171, 0.4);
+            border: 2px solid white;
+        }
+
+        /* 技能标签 */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--c-blue);
+            color: var(--text-main);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .skill-icon {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .skill-tag:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: var(--c-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 93, 171, 0.2);
+        }
+
+        .skill-tag:hover .skill-icon {
+            filter: brightness(0) invert(1);
+        }
+
+        .honor-list {
+            list-style: none;
+        }
+        .honor-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(203, 212, 229, 0.5);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .honor-item:last-child {
+            border-bottom: none;
+        }
+        .honor-item:hover {
+            padding-left: 10px;
+            background: linear-gradient(90deg, rgba(203, 212, 229, 0.2), transparent);
+        }
+        .honor-name {
+            font-weight: 500;
+            color: var(--text-main);
+        }
+        .honor-date {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .sidebar { position: relative; top: 0; }
+            .image-gallery { flex-wrap: wrap; }
+            .gallery-item { flex: 1 1 40%; height: 150px; }
+            .gallery-item:hover { transform: scale(1.1); } 
+            .sidebar-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation"></div>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="avatar-container">
+                <!-- 直接精准匹配截图原名 avatar.jpg -->
+                <img src="avatar.jpg" alt="Wanyang (Seraphina) Zhang">
+            </div>
+            <h1 class="name">Wanyang (Seraphina) Zhang</h1>
+            <div class="title">Data-Driven Analyst & Brand Storyteller</div>
+            
+            <div class="status-badge">
+                F1-CPT&OPT (STEM Eligible)
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-icon">📍</span> Gainesville, FL
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📞</span> (352) 246-7416
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">✉️</span> <a href="mailto:wanyang.zhang@ufl.edu">wanyang.zhang@ufl.edu</a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">🔗</span> <a href="https://www.linkedin.com/in/seraphina66" target="_blank">LinkedIn Profile</a>
+                </div>
+            </div>
+
+            <!-- 全新炫酷导航 -->
+            <div class="nav-container">
+                <div class="nav-header">Explore Portfolio</div>
+                <div class="sidebar-nav">
+                    <a href="#summary"><i>✨</i> Professional Summary</a>
+                    <a href="#education"><i>🎓</i> Education</a>
+                    <a href="#experience"><i>💼</i> Experience & Projects</a>
+                    <a href="#skills"><i>🛠️</i> Technical Skills</a>
+                    <a href="#honors"><i>🏆</i> Honors & Awards</a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            
+            <section class="card" id="summary">
+                <h2 class="section-title">Professional Summary</h2>
+                <div class="summary-text">
+                    <p>Analytical and results-driven graduate student with a <strong>top 5% academic standing</strong> and hands-on experience in financial analysis, data modeling, and computer vision. Simultaneously, an outgoing, hospitality-minded <strong>brand storyteller</strong> with a proven track record of driving engagement and traffic through short-form content and marketing strategies. Highly adaptable, combining strong technical acumen with creative problem-solving to deliver measurable business impacts.</p>
+                </div>
+            </section>
+
+            <section class="card" id="education">
+                <h2 class="section-title">Education</h2>
+                
+                <div class="timeline-item">
+                    <div class="item-header">
+                        <div class="item-org">University of Florida, Warrington College of Business</div>
+                        <div class="item-meta">Gainesville, FL | Dec 2026</div>
+                    </div>
+                    <div class="item-title">Master of Science in Business Analytics</div>
+                    <div class="item-desc">
+                        <ul>
+                            <li><strong>GPA: <span class="highlight">3.98/4.0</span></strong></li>
+                            <li>Ambassador for the MS-ISOM/MSBA Program (Spring 2026)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="item-header">
+                        <div class="item-org">Jiangxi University of Finance and Economics</div>
+                        <div class="item-meta">Nanchang, China | May 2025</div>
+                    </div>
+                    <div class="item-title">Bachelor of Science in Finance (Financial Risk Manager)</div>
+                    <div class="item-desc">
+                        <ul>
+                            <li><strong>GPA: 91.05/100 | Ranking: <span class="highlight">33/568 (Top 5%)</span></strong></li>
+                            <li>7th nationwide among universities specialized in finance</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card" id="experience">
+                <h2 class="section-title">Experience & Projects</h2>
+
+                <div class="timeline-item">
+                    <div class="item-header">
+                        <div class="item-title">Subject Matter Expert (Computer Vision & Modeling)</div>
+                        <div class="item-meta">FL, US | Oct 2025 – Present</div>
+                    </div>
+                    <div class="item-org">USDA-AMS Project</div>
+                    
+                    <!-- 直接精准匹配截图原名 usda-pipeline.jpg -->
+                    <img src="usda-pipeline.jpg" alt="USDA Automated Pipeline Flowchart" class="portfolio-img">
+
+                    <div class="item-desc">
+                        <ul>
+                            <li>Delivered sponsor-facing insights by owning core data wrangling, documentation, and presentations; presented data munging and heatmap storylines to USDA sponsors.</li>
+                            <li>Built reproducible Python/Jupyter pipelines and developed heatmap visualizations; participated in implementing a <strong>DINOv2-based component</strong> to extract features and surface patterns.</li>
+                            <li>Automated initial-time extraction for video assets and coordinated requirements in sponsor meetings.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="item-header">
+                        <div class="item-title">Private Field Intern (Data Analyst)</div>
+                        <div class="item-meta">Remote | Dec 2024 – Mar 2025</div>
+                    </div>
+                    <div class="item-org">Tomorrow Advancing Life</div>
+                    <div class="item-desc">
+                        <ul>
+                            <li>Analyzed user activity data to identify peak hours, adjusting campaign timing to increase event participation by <span class="highlight">18%</span> and improve retention.</li>
+                            <li>Evaluated promotional campaigns, raising group-purchase conversion rate to <span class="highlight">58%</span> and lowering complaint rate by <span class="highlight">21%</span>.</li>
+                            <li>Collaborated with the analytics team to track key metrics (click-through, conversion) and contributed to optimization reports.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="item-header">
+                        <div class="item-title">Team Leader</div>
+                        <div class="item-meta">Jun 2024 – Jul 2024</div>
+                    </div>
+                    <div class="item-org">Brand Planning for Baizhagfeng Organic Rice</div>
+                    
+                    <!-- 直接精准匹配截图原名 rice1.jpg 等 -->
+                    <div class="image-gallery">
+                        <div class="gallery-item"><img src="rice1.jpg" alt="Rice Packaging 1"></div>
+                        <div class="gallery-item"><img src="rice2.jpg" alt="Rice Packaging 2"></div>
+                        <div class="gallery-item"><img src="rice3.jpg" alt="Rice Packaging 3"></div>
+                        <div class="gallery-item"><img src="rice4.jpg" alt="Rice Packaging 4"></div>
+                    </div>
+
+                    <div class="item-desc">
+                        <ul>
+                            <li>Collected critical financial data via various channels, cleaned data, and performed regression analysis with Excel.</li>
+                            <li>Built a discounted free cash flow model and calculated the discount rate using the CAPM model.</li>
+                            <li>Provided constructive suggestions for the company based on predictive data results.</li>
+                            <li><strong>Marketing, Branding & Packaging Design:</strong> Independently spearheaded the visual identity redesign and crafted the elegant, modern packaging designs (showcased above) from scratch, successfully elevating the product's market positioning and demonstrating strong creative marketing capabilities.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="item-header">
+                        <div class="item-title">Founder</div>
+                        <div class="item-meta">China | Mar 2025 – Aug 2025</div>
+                    </div>
+                    <div class="item-org">Crystal E-commerce Venture</div>
+                    <div class="item-desc">
+                        <ul>
+                            <li>Launched and operated a retail business, leveraging Douyin (TikTok China) to drive traffic and customer acquisition.</li>
+                            <li>Grew total likes to <span class="highlight">16,000</span>; top on-camera short video surpassed <span class="highlight">100,000 views</span>, converting engagement into tangible sales.</li>
+                            <li>Produced and edited short-form videos, wrote persuasive captions, and optimized posting cadence based on data performance.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card" id="skills">
+                <h2 class="section-title">Technical & Language Skills</h2>
+                <div class="skills-container">
+                    <div class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="skill-icon"> Python
+                    </div>
+                    <div class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="SQL" class="skill-icon"> SQL
+                    </div>
+                    <div class="skill-tag">
+                        <img src="https://img.icons8.com/color/48/tableau-software.png" alt="Tableau" class="skill-icon"> Tableau
+                    </div>
+                    <div class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/r/r-original.svg" alt="R" class="skill-icon"> R
+                    </div>
+                    <div class="skill-tag">
+                        <img src="https://img.icons8.com/fluency/48/combo-chart.png" alt="Stata" class="skill-icon"> Stata
+                    </div>
+                    <div class="skill-tag">
+                        <img src="https://img.icons8.com/color/48/microsoft-excel-2019--v1.png" alt="Excel" class="skill-icon"> Excel
+                    </div>
+                    <div class="skill-tag">
+                        <img src="https://img.icons8.com/color/48/canva.png" alt="Canva" class="skill-icon"> Canva
+                    </div>
+                    <div class="skill-tag">
+                        <img src="https://img.icons8.com/color/48/youtube-play.png" alt="Content Creation" class="skill-icon"> Content Creation
+                    </div>
+                    <div class="skill-tag">
+                        <img src="https://img.icons8.com/color/48/google-translate.png" alt="Mandarin" class="skill-icon"> Mandarin (Native)
+                    </div>
+                    <div class="skill-tag">
+                        <img src="https://img.icons8.com/color/48/duolingo-logo.png" alt="English" class="skill-icon"> English (IELTS 7.0)
+                    </div>
+                </div>
+            </section>
+
+            <section class="card" id="honors">
+                <h2 class="section-title">Honors & Involvement</h2>
+                <ul class="honor-list">
+                    <li class="honor-item">
+                        <span class="honor-name">Ambassador, MSBA/MS-ISOM Program at UF</span>
+                        <span class="honor-date">Jan 2026</span>
+                    </li>
+                    <li class="honor-item">
+                        <span class="honor-name">Third Prize, Brand Planning (China Univ. Business Elites)</span>
+                        <span class="honor-date">Jun 2024</span>
+                    </li>
+                    <li class="honor-item">
+                        <span class="honor-name">Third Prize (Top 0.9%), National Financial Knowledge Competition</span>
+                        <span class="honor-date">Dec 2023</span>
+                    </li>
+                    <li class="honor-item">
+                        <span class="honor-name">Second Prize, National Social Practice Survey Competition</span>
+                        <span class="honor-date">Oct 2023</span>
+                    </li>
+                    <li class="honor-item">
+                        <span class="honor-name">"Academic Star" Award (Top 2%), JUFE</span>
+                        <span class="honor-date">2022 & 2023</span>
+                    </li>
+                    <li class="honor-item">
+                        <span class="honor-name">Director of Comm. Dept., Financial Investment Association</span>
+                        <span class="honor-date">Nov 2022</span>
+                    </li>
+                    <li class="honor-item">
+                        <span class="honor-name">Volunteer, Scarf Weaving for Kids in Remote Rural Areas</span>
+                        <span class="honor-date">Early 2022</span>
+                    </li>
+                </ul>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>
+
+							<script>
+                            	
+							</script>
+                        </body>
+                        </html>
+                    
