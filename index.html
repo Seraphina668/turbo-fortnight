@@ -1,19 +1,4 @@
-
-                        <!DOCTYPE html>
-                        <html lang="en">
-                        <head>
-                            <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-							<style>
-								body {
-									background-color: white; /* Ensure the iframe has a white background */
-								}
-
-								
-							</style>
-                        </head>
-                        <body>
-                            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -441,7 +426,7 @@
             border-radius: 3px;
         }
 
-        /* ======= 图片展示样式 ======= */
+        /* 图片展示样式 */
         .portfolio-img {
             width: 100%;
             max-width: 350px; 
@@ -531,15 +516,16 @@
             filter: brightness(0) invert(1);
         }
 
+        /* ======= 荣誉奖项与悬浮相册特效 ======= */
         .honor-list {
             list-style: none;
         }
         .honor-item {
             display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
+            flex-direction: column;
+            justify-content: center;
+            padding: 16px 0;
             border-bottom: 1px solid rgba(203, 212, 229, 0.5);
-            font-size: 0.95rem;
             transition: var(--transition);
         }
         .honor-item:last-child {
@@ -549,15 +535,75 @@
             padding-left: 10px;
             background: linear-gradient(90deg, rgba(203, 212, 229, 0.2), transparent);
         }
+        .honor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
         .honor-name {
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1rem;
             color: var(--text-main);
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
         }
         .honor-date {
             color: var(--text-light);
             font-size: 0.85rem;
             white-space: nowrap;
             margin-left: 15px;
+            font-weight: 500;
+        }
+        .honor-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 6px;
+            line-height: 1.6;
+        }
+
+        /* 悬浮缩略图特效 */
+        .hover-zoom-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .hover-zoom-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 1px solid var(--c-lavender);
+            transition: var(--transition);
+        }
+        .hover-zoom-thumb:hover {
+            border-color: var(--c-purple);
+            box-shadow: 0 2px 8px rgba(108, 93, 171, 0.3);
+        }
+        .hover-zoom-preview {
+            position: absolute;
+            bottom: 150%;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            opacity: 0;
+            visibility: hidden;
+            width: 500px; /* 大幅增加放大预览图的宽度 */
+            border-radius: 8px;
+            box-shadow: 0 15px 40px rgba(30, 20, 50, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 999;
+            transform-origin: bottom center;
+            border: 2px solid white;
+            pointer-events: none; 
+        }
+        .hover-zoom-container:hover .hover-zoom-preview {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) scale(1);
         }
 
         @media (max-width: 900px) {
@@ -567,6 +613,7 @@
             .gallery-item { flex: 1 1 40%; height: 150px; }
             .gallery-item:hover { transform: scale(1.1); } 
             .sidebar-nav { display: none; }
+            .hover-zoom-preview { width: 320px; } /* 移动端预览图相应调大 */
         }
     </style>
 </head>
@@ -577,8 +624,7 @@
     <div class="container">
         <aside class="sidebar">
             <div class="avatar-container">
-                <!-- 直接精准匹配截图原名 avatar.jpg -->
-                <img src="avatar.jpg" alt="Wanyang (Seraphina) Zhang">
+                <img src="avatar.jpg" alt="Wanyang (Seraphina) Zhang" onerror="this.onerror=null; this.src='avatar.jpg.jpg';">
             </div>
             <h1 class="name">Wanyang (Seraphina) Zhang</h1>
             <div class="title">Data-Driven Analyst & Brand Storyteller</div>
@@ -602,7 +648,6 @@
                 </div>
             </div>
 
-            <!-- 全新炫酷导航 -->
             <div class="nav-container">
                 <div class="nav-header">Explore Portfolio</div>
                 <div class="sidebar-nav">
@@ -666,8 +711,7 @@
                     </div>
                     <div class="item-org">USDA-AMS Project</div>
                     
-                    <!-- 直接精准匹配截图原名 usda-pipeline.jpg -->
-                    <img src="usda-pipeline.jpg" alt="USDA Automated Pipeline Flowchart" class="portfolio-img">
+                    <img src="usda-pipeline.jpg" alt="USDA Automated Pipeline Flowchart" class="portfolio-img" onerror="this.onerror=null; this.src='usda-pipeline.jpg.jpg';">
 
                     <div class="item-desc">
                         <ul>
@@ -700,12 +744,11 @@
                     </div>
                     <div class="item-org">Brand Planning for Baizhagfeng Organic Rice</div>
                     
-                    <!-- 直接精准匹配截图原名 rice1.jpg 等 -->
                     <div class="image-gallery">
-                        <div class="gallery-item"><img src="rice1.jpg" alt="Rice Packaging 1"></div>
-                        <div class="gallery-item"><img src="rice2.jpg" alt="Rice Packaging 2"></div>
-                        <div class="gallery-item"><img src="rice3.jpg" alt="Rice Packaging 3"></div>
-                        <div class="gallery-item"><img src="rice4.jpg" alt="Rice Packaging 4"></div>
+                        <div class="gallery-item"><img src="rice1.jpg" alt="Rice Packaging 1" onerror="this.onerror=null; this.src='rice1.jpg.jpg';"></div>
+                        <div class="gallery-item"><img src="rice2.jpg" alt="Rice Packaging 2" onerror="this.onerror=null; this.src='rice2.jpg.jpg';"></div>
+                        <div class="gallery-item"><img src="rice3.jpg" alt="Rice Packaging 3" onerror="this.onerror=null; this.src='rice3.jpg.jpg';"></div>
+                        <div class="gallery-item"><img src="rice4.jpg" alt="Rice Packaging 4" onerror="this.onerror=null; this.src='rice4.jpg.jpg';"></div>
                     </div>
 
                     <div class="item-desc">
@@ -773,33 +816,80 @@
             <section class="card" id="honors">
                 <h2 class="section-title">Honors & Involvement</h2>
                 <ul class="honor-list">
+                    
                     <li class="honor-item">
-                        <span class="honor-name">Ambassador, MSBA/MS-ISOM Program at UF</span>
-                        <span class="honor-date">Jan 2026</span>
+                        <div class="honor-header">
+                            <span class="honor-name">
+                                ISOM Forum Scholarship & Erenguc Family Scholarship
+                                
+                                <div class="hover-zoom-container">
+                                    <img src="scholarship1.jpg" class="hover-zoom-thumb" alt="Certificates" onerror="this.onerror=null; this.src='scholarship1.jpg.jpg';">
+                                    <img src="scholarship1.jpg" class="hover-zoom-preview" alt="Certificates Large" onerror="this.onerror=null; this.src='scholarship1.jpg.jpg';">
+                                </div>
+                                <div class="hover-zoom-container">
+                                    <img src="scholarship2.jpg" class="hover-zoom-thumb" alt="Portrait" onerror="this.onerror=null; this.src='scholarship2.jpg.jpg';">
+                                    <img src="scholarship2.jpg" class="hover-zoom-preview" alt="Portrait Large" onerror="this.onerror=null; this.src='scholarship2.jpg.jpg';">
+                                </div>
+                                <div class="hover-zoom-container">
+                                    <img src="scholarship3.jpg" class="hover-zoom-thumb" alt="Group Photo" onerror="this.onerror=null; this.src='scholarship3.jpg.jpg';">
+                                    <img src="scholarship3.jpg" class="hover-zoom-preview" alt="Group Photo Large" onerror="this.onerror=null; this.src='scholarship3.jpg.jpg';">
+                                </div>
+                            </span>
+                            <span class="honor-date">Apr 2026</span>
+                        </div>
+                        <div class="honor-desc">
+                            Awarded by <strong>The Erenguc Family</strong> (Dr. Selcuk Erenguc, retired ISOM faculty & former Associate Dean) and <strong>The ISOM Forum</strong> (industry advisory board including <strong>The Harris Group, KPMG, Raymond James, ExxonMobil</strong>).
+                        </div>
+                    </li>
+
+                    <li class="honor-item">
+                        <div class="honor-header">
+                            <span class="honor-name">
+                                Ambassador, MSBA/MS-ISOM Program at UF
+                                <div class="hover-zoom-container">
+                                    <img src="ambassador.jpg" class="hover-zoom-thumb" alt="Ambassador Cert" onerror="this.onerror=null; this.src='ambassador.jpg.jpg';">
+                                    <img src="ambassador.jpg" class="hover-zoom-preview" alt="Ambassador Cert Large" onerror="this.onerror=null; this.src='ambassador.jpg.jpg';">
+                                </div>
+                            </span>
+                            <span class="honor-date">Jan 2026</span>
+                        </div>
+                    </li>
+
+                    <li class="honor-item">
+                        <div class="honor-header">
+                            <span class="honor-name">Third Prize, Brand Planning (China Univ. Business Elites)</span>
+                            <span class="honor-date">Jun 2024</span>
+                        </div>
                     </li>
                     <li class="honor-item">
-                        <span class="honor-name">Third Prize, Brand Planning (China Univ. Business Elites)</span>
-                        <span class="honor-date">Jun 2024</span>
+                        <div class="honor-header">
+                            <span class="honor-name">Third Prize (Top 0.9%), National Financial Knowledge Competition</span>
+                            <span class="honor-date">Dec 2023</span>
+                        </div>
                     </li>
                     <li class="honor-item">
-                        <span class="honor-name">Third Prize (Top 0.9%), National Financial Knowledge Competition</span>
-                        <span class="honor-date">Dec 2023</span>
+                        <div class="honor-header">
+                            <span class="honor-name">Second Prize, National Social Practice Survey Competition</span>
+                            <span class="honor-date">Oct 2023</span>
+                        </div>
                     </li>
                     <li class="honor-item">
-                        <span class="honor-name">Second Prize, National Social Practice Survey Competition</span>
-                        <span class="honor-date">Oct 2023</span>
+                        <div class="honor-header">
+                            <span class="honor-name">"Academic Star" Award (Top 2%), JUFE</span>
+                            <span class="honor-date">2022 & 2023</span>
+                        </div>
                     </li>
                     <li class="honor-item">
-                        <span class="honor-name">"Academic Star" Award (Top 2%), JUFE</span>
-                        <span class="honor-date">2022 & 2023</span>
+                        <div class="honor-header">
+                            <span class="honor-name">Director of Comm. Dept., Financial Investment Association</span>
+                            <span class="honor-date">Nov 2022</span>
+                        </div>
                     </li>
                     <li class="honor-item">
-                        <span class="honor-name">Director of Comm. Dept., Financial Investment Association</span>
-                        <span class="honor-date">Nov 2022</span>
-                    </li>
-                    <li class="honor-item">
-                        <span class="honor-name">Volunteer, Scarf Weaving for Kids in Remote Rural Areas</span>
-                        <span class="honor-date">Early 2022</span>
+                        <div class="honor-header">
+                            <span class="honor-name">Volunteer, Scarf Weaving for Kids in Remote Rural Areas</span>
+                            <span class="honor-date">Early 2022</span>
+                        </div>
                     </li>
                 </ul>
             </section>
@@ -809,10 +899,3 @@
 
 </body>
 </html>
-
-							<script>
-                            	
-							</script>
-                        </body>
-                        </html>
-                    
