@@ -940,7 +940,25 @@
     /* FORM */
     /* FORM - 发送给 Formspree */
 document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault(); 
+  e.preventDefault();
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+  data.type = "Contact Form"; 
+  
+  fetch('https://formspree.io/f/xqewoekd', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(() => {
+    this.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('visible');
+  })
+  .catch(error => console.error('Error!', error));
+});
   
   // 获取表单里填写的名字、邮箱、留言等
   const formData = new FormData(this);
@@ -983,15 +1001,12 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         document.getElementById('q2-next').classList.add('ready');
       });
     });
-    /* QUIZ 第二题点击解锁 - 发送给 Zapier */
+    /* QUIZ 第二题点击解锁 - 发送给 Formspree */
 document.getElementById('q2-next').addEventListener('click', () => {
   if (!q2done) return;
-  
-  // 抓取用户选中的两个选项文本
   const q1Answer = document.querySelector('#q1-choices .choice-btn.selected').innerText;
   const q2Answer = document.querySelector('#q2-choices .choice-btn.selected').innerText;
   
-  // 把选项数据发送到你的 Formspree 链接
   fetch('https://formspree.io/f/xzdyqdby', {
     method: 'POST',
     body: JSON.stringify({
@@ -999,10 +1014,13 @@ document.getElementById('q2-next').addEventListener('click', () => {
       question_1: q1Answer,
       question_2: q2Answer,
       time: new Date().toLocaleString()
-    })
+    }),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
   }).catch(error => console.error('Error!', error));
-
-  // 下面是原有的界面切换逻辑，保持不变
+  
   document.getElementById('panel-q2').classList.remove('active');
   document.getElementById('step2dot').classList.replace('active', 'done');
   document.getElementById('stepline2').classList.add('done');
