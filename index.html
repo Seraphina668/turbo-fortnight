@@ -938,10 +938,27 @@
     document.getElementById('lightbox-close').addEventListener('click', () => lightbox.classList.remove('open'));
     lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
     /* FORM */
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault(); this.style.display = 'none';
-      document.getElementById('formSuccess').classList.add('visible');
-    });
+    /* FORM - 发送给 Zapier */
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault(); 
+  
+  // 获取表单里填写的名字、邮箱、留言等
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+  data.type = "Contact Form"; // 加上标记，代表这是联系表单的数据
+
+  // 把数据发送到你的 Zapier 链接
+  fetch('https://hooks.zapier.com/hooks/catch/27375095/uv270bz/', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    // 成功后隐藏表单，显示“消息已收到”
+    this.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('visible');
+  })
+  .catch(error => console.error('Error!', error));
+});
     /* QUIZ */
     let q1done = false, q2done = false;
     document.querySelectorAll('#q1-choices .choice-btn').forEach(btn => {
@@ -966,16 +983,34 @@
         document.getElementById('q2-next').classList.add('ready');
       });
     });
-    document.getElementById('q2-next').addEventListener('click', () => {
-      if (!q2done) return;
-      document.getElementById('panel-q2').classList.remove('active');
-      document.getElementById('step2dot').classList.replace('active', 'done');
-      document.getElementById('stepline2').classList.add('done');
-      document.getElementById('step3dot').classList.add('done');
-      const cs = document.getElementById('cards-section');
-      cs.classList.add('visible');
-      setTimeout(() => cs.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
-    });
+    /* QUIZ 第二题点击解锁 - 发送给 Zapier */
+document.getElementById('q2-next').addEventListener('click', () => {
+  if (!q2done) return;
+  
+  // 抓取用户选中的两个选项文本
+  const q1Answer = document.querySelector('#q1-choices .choice-btn.selected').innerText;
+  const q2Answer = document.querySelector('#q2-choices .choice-btn.selected').innerText;
+  
+  // 把选项数据发送到你的 Zapier 链接
+  fetch('https://hooks.zapier.com/hooks/catch/27375095/uv270bz/', {
+    method: 'POST',
+    body: JSON.stringify({
+      type: "Discover Quiz",
+      question_1: q1Answer,
+      question_2: q2Answer,
+      time: new Date().toLocaleString()
+    })
+  }).catch(error => console.error('Error!', error));
+
+  // 下面是原有的界面切换逻辑，保持不变
+  document.getElementById('panel-q2').classList.remove('active');
+  document.getElementById('step2dot').classList.replace('active', 'done');
+  document.getElementById('stepline2').classList.add('done');
+  document.getElementById('step3dot').classList.add('done');
+  const cs = document.getElementById('cards-section');
+  cs.classList.add('visible');
+  setTimeout(() => cs.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+});
     
     /* ══════════════════════════════════════
        HOBBY CARDS FLIP LOGIC - FIXED
