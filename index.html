@@ -938,7 +938,7 @@
     document.getElementById('lightbox-close').addEventListener('click', () => lightbox.classList.remove('open'));
     lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
     /* FORM */
-    /* FORM - 发送给 Zapier */
+    /* FORM - 发送给 Formspree */
 document.getElementById('contactForm').addEventListener('submit', function(e) {
   e.preventDefault(); 
   
@@ -947,8 +947,8 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   const data = Object.fromEntries(formData.entries());
   data.type = "Contact Form"; // 加上标记，代表这是联系表单的数据
 
-  // 把数据发送到你的 Zapier 链接
-  fetch('https://hooks.zapier.com/hooks/catch/27375095/uv270bz/', {
+  // 把数据发送到你的 Formspree 链接
+  fetch('https://formspree.io/f/xqewoekd', {
     method: 'POST',
     body: JSON.stringify(data)
   })
@@ -991,8 +991,8 @@ document.getElementById('q2-next').addEventListener('click', () => {
   const q1Answer = document.querySelector('#q1-choices .choice-btn.selected').innerText;
   const q2Answer = document.querySelector('#q2-choices .choice-btn.selected').innerText;
   
-  // 把选项数据发送到你的 Zapier 链接
-  fetch('https://hooks.zapier.com/hooks/catch/27375095/uv270bz/', {
+  // 把选项数据发送到你的 Formspree 链接
+  fetch('https://formspree.io/f/xzdyqdby', {
     method: 'POST',
     body: JSON.stringify({
       type: "Discover Quiz",
