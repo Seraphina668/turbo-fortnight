@@ -291,20 +291,17 @@
     .cards-intro{margin-bottom:32px}
     .cards-intro p{font-size:.84rem;color:var(--ink2);line-height:1.7}
     .cards-intro strong{color:var(--purple)}
-    
     /* ══════════════════════════════════════
        HOBBY CARDS - FIXED
     ══════════════════════════════════════ */
     .hobby-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
     @media(max-width:900px){.hobby-cards{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:500px){.hobby-cards{grid-template-columns:1fr}}
-    
     .hc-scene{
       height: 480px;
       perspective: 1000px;
       cursor: none;
     }
-    
     .hc-card{
       width: 100%;
       height: 100%;
@@ -312,11 +309,9 @@
       transform-style: preserve-3d;
       transition: transform .65s cubic-bezier(.4,0,.2,1);
     }
-    
     .hc-scene.flipped .hc-card{
       transform: rotateY(180deg);
     }
-    
     /* 强制正反面隐藏背部并消除透视 */
     .hc-front,
     .hc-back{
@@ -328,13 +323,11 @@
       backface-visibility: hidden;
       transform: translateZ(1px); /* 解决某些浏览器下的Z轴透视和闪烁问题 */
     }
-    
     .hc-front{
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
     }
-    
     .hc-back{
       transform: rotateY(180deg) translateZ(1px); /* 背面必须带有 translateZ 以及 180度翻转 */
       background-color: #faf8f5;
@@ -346,7 +339,6 @@
       flex-direction: column;
       padding: 20px;
     }
-    
     /* 正面背景 */
     .hc-front.dance-bg {background:linear-gradient(145deg,#3d2f5e 0%,#5c4490 50%,#7B6BA8 100%)}
     .hc-front.cooking-bg{background:linear-gradient(145deg,#2a4035 0%,#3d6050 50%,#6F9575 100%)}
@@ -621,7 +613,7 @@
         <div class="edu-school"><span class="en">University of Florida · Warrington College of Business</span><span class="zh">佛罗里达大学 · 沃灵顿商学院</span></div>
         <div class="edu-degree"><span class="en">Master of Science<br>in Business Analytics</span><span class="zh">商业分析<br>理学硕士</span></div>
         <div class="edu-detail"><span class="en">GPA: <strong>3.98 / 4.0</strong><br>Expected Dec 2026<br>Ambassador, MS-ISOM / MSBA Program (Spring 2026)<br>Gainesville, FL</span><span class="zh">绩点：<strong>3.98 / 4.0</strong><br>预计2026年12月毕业<br>佛罗里达大学商业分析专业学生大使（2026年春季）<br>佛罗里达州盖恩斯维尔</span></div>
-        <span class="edu-badge">STEM Eligible · F1-CPT &amp; OPT</span>
+        <span class="edu-badge">STEM Eligible · F1-CPT & OPT</span>
         <div class="edu-ghost">3.98</div>
       </div>
       <div class="edu-card reveal reveal-delay-2">
@@ -937,46 +929,28 @@
     });
     document.getElementById('lightbox-close').addEventListener('click', () => lightbox.classList.remove('open'));
     lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
-    /* FORM */
+    
     /* FORM - 发送给 Formspree */
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const formData = new FormData(this);
-  const data = Object.fromEntries(formData.entries());
-  data.type = "Contact Form"; 
-  
-  fetch('https://formspree.io/f/xqewoekd', {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(() => {
-    this.style.display = 'none';
-    document.getElementById('formSuccess').classList.add('visible');
-  })
-  .catch(error => console.error('Error!', error));
-});
-  
-  // 获取表单里填写的名字、邮箱、留言等
-  const formData = new FormData(this);
-  const data = Object.fromEntries(formData.entries());
-  data.type = "Contact Form"; // 加上标记，代表这是联系表单的数据
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+      data.type = "Contact Form";
+      fetch('https://formspree.io/f/xqewoekd', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(() => {
+        this.style.display = 'none';
+        document.getElementById('formSuccess').classList.add('visible');
+      })
+      .catch(error => console.error('Error!', error));
+    });
 
-  // 把数据发送到你的 Formspree 链接
-  fetch('https://formspree.io/f/xqewoekd', {
-    method: 'POST',
-    body: JSON.stringify(data)
-  })
-  .then(() => {
-    // 成功后隐藏表单，显示“消息已收到”
-    this.style.display = 'none';
-    document.getElementById('formSuccess').classList.add('visible');
-  })
-  .catch(error => console.error('Error!', error));
-});
     /* QUIZ */
     let q1done = false, q2done = false;
     document.querySelectorAll('#q1-choices .choice-btn').forEach(btn => {
@@ -1001,34 +975,33 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         document.getElementById('q2-next').classList.add('ready');
       });
     });
+    
     /* QUIZ 第二题点击解锁 - 发送给 Formspree */
-document.getElementById('q2-next').addEventListener('click', () => {
-  if (!q2done) return;
-  const q1Answer = document.querySelector('#q1-choices .choice-btn.selected').innerText;
-  const q2Answer = document.querySelector('#q2-choices .choice-btn.selected').innerText;
-  
-  fetch('https://formspree.io/f/xzdyqdby', {
-    method: 'POST',
-    body: JSON.stringify({
-      type: "Discover Quiz",
-      question_1: q1Answer,
-      question_2: q2Answer,
-      time: new Date().toLocaleString()
-    }),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).catch(error => console.error('Error!', error));
-  
-  document.getElementById('panel-q2').classList.remove('active');
-  document.getElementById('step2dot').classList.replace('active', 'done');
-  document.getElementById('stepline2').classList.add('done');
-  document.getElementById('step3dot').classList.add('done');
-  const cs = document.getElementById('cards-section');
-  cs.classList.add('visible');
-  setTimeout(() => cs.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
-});
+    document.getElementById('q2-next').addEventListener('click', () => {
+      if (!q2done) return;
+      const q1Answer = document.querySelector('#q1-choices .choice-btn.selected').innerText;
+      const q2Answer = document.querySelector('#q2-choices .choice-btn.selected').innerText;
+      fetch('https://formspree.io/f/xzdyqdby', {
+        method: 'POST',
+        body: JSON.stringify({
+          type: "Discover Quiz",
+          question_1: q1Answer,
+          question_2: q2Answer,
+          time: new Date().toLocaleString()
+        }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }).catch(error => console.error('Error!', error));
+      document.getElementById('panel-q2').classList.remove('active');
+      document.getElementById('step2dot').classList.replace('active', 'done');
+      document.getElementById('stepline2').classList.add('done');
+      document.getElementById('step3dot').classList.add('done');
+      const cs = document.getElementById('cards-section');
+      cs.classList.add('visible');
+      setTimeout(() => cs.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+    });
     
     /* ══════════════════════════════════════
        HOBBY CARDS FLIP LOGIC - FIXED
@@ -1037,7 +1010,6 @@ document.getElementById('q2-next').addEventListener('click', () => {
       scene.addEventListener('click', function(e) {
         /* Prevent flipping if clicking on an image */
         if (e.target.tagName === 'IMG') return;
-        
         /* 切换正反面状态，不仅可以翻过去，还能点击卡片本身翻回来 */
         this.classList.toggle('flipped');
       });
