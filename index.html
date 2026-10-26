@@ -19,6 +19,17 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wanyang Zhang — Portfolio</title>
+  <script>
+    // Start before external stylesheets: slow fonts/images must never gate entry.
+    window.dismissWelcome = function () {
+      document.documentElement.classList.add('welcome-dismissed');
+      const welcome = document.getElementById('welcome');
+      if (welcome) welcome.setAttribute('aria-hidden', 'true');
+      const photo = document.getElementById('heroPhotoCol');
+      if (photo) photo.classList.add('loaded');
+    };
+    window.setTimeout(window.dismissWelcome, 4200);
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&family=Noto+Serif+SC:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
@@ -105,6 +116,21 @@
       transition:opacity 1.6s ease 0.5s, transform 1.2s cubic-bezier(.76,0,.24,1) 0.5s;
     }
     #welcome.gone{opacity:0;transform:translateY(-10px);pointer-events:none}
+    html.welcome-dismissed #welcome{display:none!important}
+    #welcome{animation:welcomeFailsafe 0s 5s forwards}
+    @keyframes welcomeFailsafe{to{visibility:hidden;opacity:0;pointer-events:none}}
+    .welcome-skip{
+      position:absolute;top:24px;right:24px;z-index:4;
+      border:1px solid var(--ink3);border-radius:20px;padding:10px 18px;
+      background:var(--bg);color:var(--ink);font:inherit;cursor:pointer;
+    }
+    /* Touch devices go straight to the portfolio, including in-app browsers. */
+    @media(max-width:768px),(hover:none),(prefers-reduced-motion:reduce){
+      #welcome{display:none!important}
+      body{cursor:auto}
+      .cursor,.cursor-follower{display:none}
+      .reveal{opacity:1!important;transform:none!important}
+    }
 
     /* 水彩画背景图 */
     .w-bg-img{
@@ -567,6 +593,9 @@
     body.lang-zh span.zh{display:inline!important}body.lang-zh span.en{display:none!important}
     @media(max-width:900px){.about-grid,.contact-grid,.edu-grid{grid-template-columns:1fr;gap:36px}.exp-item{grid-template-columns:1fr;gap:10px}.exp-number{display:none}.form-row{grid-template-columns:1fr;gap:0}footer{flex-direction:column;text-align:center}}
     @media(max-width:600px){section{padding:68px 5%}.skills-icon-grid{grid-template-columns:repeat(3,1fr)}.lang-grid{grid-template-columns:1fr}.honor-photos{flex-wrap:wrap}}
+    @media(max-width:768px),(hover:none),(prefers-reduced-motion:reduce){
+      .hero-text *{animation:none!important;opacity:1!important;transform:none!important}
+    }
   </style>
 </head>
 <body class="lang-en">
@@ -575,6 +604,7 @@
 
   <!-- ══ 水彩画开屏动画 ══ -->
   <div id="welcome">
+    <button class="welcome-skip" type="button" onclick="dismissWelcome()">Skip intro</button>
     <div class="w-bg-img"></div>
     <div class="w-bg-overlay"></div>
     <div class="w-vignette"></div>
@@ -1016,8 +1046,8 @@
       document.getElementById('btnZh').classList.toggle('active', lang === 'zh');
     }
 
-    /* WELCOME - 延长至5.5秒 */
-    const WELCOME_SHOW = 5500, BAR_DURATION = 4800;
+    /* Intro duration is independent of window.load and image downloads. */
+    const WELCOME_SHOW = 3200, BAR_DURATION = 2800;
     const wBarFill = document.getElementById('wBarFill');
     const wCounter = document.getElementById('wCounter');
     const t0 = Date.now();
@@ -1029,12 +1059,14 @@
       if (p < 1) requestAnimationFrame(animateBar);
     }
     requestAnimationFrame(animateBar);
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('welcome').classList.add('gone');
-        setTimeout(() => { document.getElementById('welcome').style.display = 'none'; }, 1800);
-      }, WELCOME_SHOW);
-      setTimeout(() => { document.getElementById('heroPhotoCol').classList.add('loaded'); }, WELCOME_SHOW + 900);
+    setTimeout(window.dismissWelcome, WELCOME_SHOW);
+    if (window.matchMedia('(max-width:768px), (hover:none), (prefers-reduced-motion:reduce)').matches) {
+      window.dismissWelcome();
+    }
+    // Below-the-fold photographs should not compete with the first screen.
+    document.querySelectorAll('img').forEach(img => {
+      img.decoding = 'async';
+      if (!img.closest('#hero')) img.loading = 'lazy';
     });
 
     /* CURSOR */
